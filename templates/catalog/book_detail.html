@@ -8,16 +8,17 @@
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
   <p><strong>Language:</strong> {{ book.language }}</p>
   <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Edit options
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="{% url 'book_update' book.id %}">Change book info</a></li>
-            <li><a class="dropdown-item" href="{% url 'book_delete' book.id %}">Delete book</a></li>
-        </ul>
-    </div>
+    {% if request.user.is_staff %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Edit options
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url 'book_update' book.id %}">Change book info</a></li>
+                <li><a class="dropdown-item" href="{% url 'book_delete' book.id %}">Delete book</a></li>
+            </ul>
+        </div>
+    {% endif %}
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Copies</h4>
