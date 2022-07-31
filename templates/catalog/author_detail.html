@@ -1,0 +1,33 @@
+{% extends "catalog/../base_generic.html" %}
+
+{% block content %}
+  <h1>Author: {{ author.first_name }} {{ author.last_name }}</h1>
+
+  <p><strong>Author:</strong> {{ author.first_name }} {{ author.last_name }}</p>
+  <p><strong>Dates:</strong> {{ author.date_of_birth }} (birth) {% if author.date_of_death %} -- {{ author.date_of_death }} (death) {% endif %}</p>
+
+  {% if request.user.is_staff %}
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Edit options
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{% url 'author_update' author.id %}">Change author info</a></li>
+            <li><a class="dropdown-item" href="{% url 'author_delete' author.id %}">Delete author</a></li>
+            <li><a class="dropdown-item" href="{% url 'author_book_create' author.id %}">Add book</a></li>
+        </ul>
+      </div>
+
+  {% endif %}
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Books</h4>
+
+    {% for book in author.book_set.all %}
+    <hr>
+      <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.get_instance_count}})
+        <p>{{ book.summary }}</p>
+        <p style="color: darkslateblue">{{ book.display_genre }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
