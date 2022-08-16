@@ -49,7 +49,7 @@ Password: libpass1
 
 ```
 
-**librarian (moderator) access** (basic)
+**user access** (basic)
 
 ```
 Login: user
